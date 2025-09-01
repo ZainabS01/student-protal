@@ -12,7 +12,7 @@ export default function AdminAttendance() {
     setLoading(true);
     setError('');
     try {
-      const res = await fetch('http://localhost:5000/api/attendance/all', {
+      const res = await fetch('https://backend-omega-teal.vercel.app/api/attendance/all', {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();

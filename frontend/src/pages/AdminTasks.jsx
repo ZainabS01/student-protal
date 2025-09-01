@@ -12,7 +12,7 @@ export default function AdminTasks() {
     setLoading(true);
     setError('');
     try {
-      const res = await fetch('http://localhost:5000/api/task/all', {
+      const res = await fetch('https://backend-omega-teal.vercel.app/api/task/all', {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -33,7 +33,7 @@ export default function AdminTasks() {
     e.preventDefault();
     setMessage('');
     try {
-      const res = await fetch('http://localhost:5000/api/task/create', {
+      const res = await fetch('https://backend-omega-teal.vercel.app/api/task/create', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({

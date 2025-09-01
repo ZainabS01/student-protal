@@ -21,8 +21,8 @@ export default function StudentDashboard() {
       setLoading(true);
       try {
         const [tasksRes, attRes] = await Promise.all([
-          fetch('http://localhost:5000/api/task/all', { headers: { Authorization: `Bearer ${token}` } }),
-          fetch('http://localhost:5000/api/attendance/me', { headers: { Authorization: `Bearer ${token}` } }),
+          fetch('https://backend-omega-teal.vercel.app/api/task/all', { headers: { Authorization: `Bearer ${token}` } }),
+          fetch('https://backend-omega-teal.vercel.app/api/attendance/me', { headers: { Authorization: `Bearer ${token}` } }),
         ]);
         const [tasksData, attData] = await Promise.all([tasksRes.json(), attRes.json()]);
         setTasks(Array.isArray(tasksData) ? tasksData : []);
@@ -39,7 +39,7 @@ export default function StudentDashboard() {
     const fetchMe = async () => {
       if (!token) return;
       try {
-        const res = await fetch('http://localhost:5000/api/auth/me', { headers: { Authorization: `Bearer ${token}` } });
+        const res = await fetch('https://backend-omega-teal.vercel.app/api/auth/me', { headers: { Authorization: `Bearer ${token}` } });
         if (!res.ok) return; // ignore if unauthorized
         const data = await res.json();
         if (data && data._id) {
@@ -87,7 +87,7 @@ export default function StudentDashboard() {
     setAttendanceMsg('');
     setBusyTask(prev => ({ ...prev, [taskId]: true }));
     try {
-      const res = await fetch(`http://localhost:5000/api/attendance/mark-by-task/${taskId}`, {
+      const res = await fetch(`https://backend-omega-teal.vercel.app/api/attendance/mark-by-task/${taskId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
       });
@@ -97,7 +97,7 @@ export default function StudentDashboard() {
       // optimistic update to show immediately
       setMyAttendance(prev => ([...prev, { task: taskId, createdAt: new Date().toISOString() }]));
       // refresh my attendance set
-      const me = await fetch('http://localhost:5000/api/attendance/me', { headers: { Authorization: `Bearer ${token}` } });
+      const me = await fetch('https://backend-omega-teal.vercel.app/api/attendance/me', { headers: { Authorization: `Bearer ${token}` } });
       const meData = await me.json();
       setMyAttendance(Array.isArray(meData) ? meData : []);
     } catch (e) {
@@ -271,7 +271,7 @@ export default function StudentDashboard() {
                     return;
                   }
                   try {
-                    const res = await fetch('http://localhost:5000/api/auth/me', {
+                    const res = await fetch('https://backend-omega-teal.vercel.app/api/auth/me', {
                       method: 'PUT',
                       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
                       body: JSON.stringify({
