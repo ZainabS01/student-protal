@@ -13,7 +13,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Configure CORS
-const allowedOrigins = ['http://localhost:5173'];
+const localFrontend = 'http://localhost:5173';
+const deployedFrontend = process.env.FRONTEND_URL; // e.g. https://your-site.netlify.app
+const allowedOrigins = [localFrontend].concat(deployedFrontend ? [deployedFrontend] : []);
 
 // Apply CORS middleware
 app.use(cors({
