@@ -14,16 +14,21 @@ app.use(express.urlencoded({ extended: true }));
 
 // Configure CORS
 const localFrontend = 'http://localhost:5173';
-const deployedFrontend = process.env.FRONTEND_URL; // e.g. https://your-site.netlify.app
-const allowedOrigins = [localFrontend].concat(deployedFrontend ? [deployedFrontend] : []);
+// Directly allow your Netlify frontend URL
+const hardcodedFrontend = 'https://jocular-yeot-207524.netlify.app';
+const deployedFrontend = process.env.FRONTEND_URL; // optional override via env
+const allowedOrigins = [localFrontend, hardcodedFrontend]
+  .concat(deployedFrontend ? [deployedFrontend] : []);
 
 app.use(cors({
   origin: function (origin, callback) {
-    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
+    // Allow same-origin, tools, and direct calls (origin may be undefined)
+    if (!origin) return callback(null, true);
+    // Allow explicit list
+    if (allowedOrigins.includes(origin)) return callback(null, true);
+    // Allow Netlify preview/branch deploys like https://<site>--<branch>.netlify.app
+    if (/\.netlify\.app$/i.test(origin)) return callback(null, true);
+    return callback(new Error('Not allowed by CORS'));
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
