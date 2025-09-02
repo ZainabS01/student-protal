@@ -6,7 +6,7 @@ let cachedHandler;
 exports.handler = async (event, context) => {
   if (!cachedHandler) {
     await ensureDbConnection();
-    cachedHandler = serverless(app);
+    cachedHandler = serverless(app, { basePath: '/.netlify/functions/api' });
   }
   return cachedHandler(event, context);
 };
