@@ -31,7 +31,7 @@ export default function Reset() {
     }
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/auth/reset', {
+      const res = await fetch('/api/auth/reset', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token, newPassword }),

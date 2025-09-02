@@ -3,14 +3,14 @@
   publish = "frontend/dist"
   functions = "netlify/functions"
 
-# SPA routing for React Router
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-
 # Proxy all /api/* requests to the Netlify function
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/api/:splat"
+  status = 200
+
+# SPA routing for React Router
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
   status = 200

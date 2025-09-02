@@ -16,7 +16,7 @@ export default function Forgot() {
     setMessage('');
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/auth/forgot-otp', {
+      const res = await fetch('/api/auth/forgot-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
@@ -45,7 +45,7 @@ export default function Forgot() {
     }
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/auth/reset-with-otp', {
+      const res = await fetch('/api/auth/reset-with-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, otp, newPassword }),
